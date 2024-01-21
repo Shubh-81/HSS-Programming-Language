@@ -118,7 +118,7 @@ function outerFunction() {
     var outerVar = "I'm from outer!";
 
     function innerFunction() {
-        python(outerVar);
+        print(outerVar);
     }
 
     return innerFunction;
