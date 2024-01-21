@@ -91,9 +91,7 @@ for (var i = 0; i < 5; i++) {
     // code block
 }
 
-do {
-    // code block
-} while (condition)
+
 ```
 
 ## Functions and Closures
@@ -157,10 +155,10 @@ var a = 5;
 a++;
 print(a); // Outputs 6
 a+=1;
-print(a) // Outputs 7
-var b = 5
-a = a + b
-print(a) // Outputs 12
+print(a) ;// Outputs 7
+var b = 5 ;
+a+=b ;
+print(a) ;// Outputs 12
 ```
 
 ### Boolean Type
@@ -194,6 +192,8 @@ print(c); // Outputs "Hello World"
 var a = "Hello World";
 var c = a.slice(0, 5);
 print(c); // Outputs "Hello"
+var d = a.slice(-5,);
+print(d) ;// Outputs "World"
 ```
 
 ### List and Arrays
@@ -207,7 +207,7 @@ a.append(5); // Throws an error, array is fixed size
 
 print(a.length()); // Outputs 3, same for list
 print(a[0]);  // Prints first element, same for list
-print(a[a.length() - 1]); // Prints last element, same for list
+print(a[- 1]); // Prints last element, same for list
 ```
 
 ### Assignment and Let Expressions
