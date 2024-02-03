@@ -1,15 +1,6 @@
 import re
 
 
-class Token:
-    def __init__(self, name, value=None):
-        self.name = name
-        self.value = value
-
-    def __str__(self):
-        return f'<{self.name}, "{self.value}">'
-
-
 class Lexer:
     def __init__(self, source_code):
         self.source_code = source_code
