@@ -1,0 +1,11 @@
+const pi = 3.14159; 
+var radius = 5; 
+var area = pi * radius * radius; 
+print("Area of circle =", area); 
+const m1 =1;  // this is a sample code @3#$%
+
+if(true) {
+    print("yes it is true");
+}elif (radius == pi){
+    print("no");
+}
