@@ -9,7 +9,7 @@ class Lexer:
         keywords = ['var', 'const', 'if', 'elif', 'else', 'while', 'do', 'for', 'func', 'return', 'try', 'catch',
                     'finally',
                     'throw', 'print', 'true', 'false', 'tuple', 'list', 'arr']
-        uninary_operators=['==','!=','<=','>=','+=','-=','++','--']
+        unary_operators=['==','!=','<=','>=','+=','-=','++','--']
         operators=['+','-','*','/','!','=','%','>','<']
         parenthesis = ['(', ')', '{', '}', '[', ']']
         punctuation = [',', ':', '"', "'",'.']
@@ -21,14 +21,13 @@ class Lexer:
         tokens = re.findall(r'".*?"|\w+|\d+|[^\s\w]', source_code)
 
         i = 0
-        while i < len(source_code)-1:
-            a = source_code[i] + source_code[i+1]
-            if a in uninary_operators:
+        while i < len(tokens)-1:
+            a = tokens[i] + tokens[i+1]
+            if a in unary_operators:
                 self.tokens.append(('uninary_operator', a))
-                source_code = source_code[:i] + source_code[i+1:]
+                tokens = tokens[:i] + tokens[i+2:]
             else:
-                i += 1 
-
+                 i += 1 
 
         for token in tokens:
             if re.match(r'^"[^"]*"$', token): 
@@ -37,6 +36,8 @@ class Lexer:
                 self.tokens.append(('keyword', token))
             elif token in operators:
                 self.tokens.append(('operator', token))
+            elif token in punctuation:
+                self.tokens.append(('punctuation', token))
             elif token in punctuation:
                 self.tokens.append(('punctuation', token))
             elif token in endOfStatement:
@@ -54,8 +55,7 @@ class Lexer:
         return self.tokens
 
 
-file_path='your_file_location' 
-
+file_path='your_file_location'
 try:
     with open(file_path, 'r') as file:
         source_code = file.read()
