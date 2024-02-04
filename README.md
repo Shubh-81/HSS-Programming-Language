@@ -346,7 +346,18 @@ print(a[a.length() - 1]); // Prints last element, same for list
 
 **`var`**: Declares a variable and optionally initializes its value.
 ```python
+
+
 const a = 5; // Variable a cannot be changed after assignment
 var b = 5; // Variable can be changed after assignment
 ```
 
+## Lexer
+
+Test cases are present in the `testcases` folder with the extension `.hss`.
+
+To run the lexer, use the following command:
+
+```bash
+python lexer.py <path_to_testcase.hss>
+```
