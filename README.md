@@ -45,6 +45,14 @@ print("Hello, World!");
 ## Basic Syntax
 
 ### Variables and Assignment
+H** has two types of variable declaration.
+
+**var**: Declares a variable and optionally initializes its value.
+
+**const**: Declares a read-only named constant.
+
+H** is a case-sensitive language. A H** identifier can start with a letter(a - z, A - Z) or with a underscore (_) and following characters can also include numbers (0 - 9). 
+
 ```python
 const x = 5;              // Constant Variable
 var y = 10;               // Non-Constant Variable
@@ -61,6 +69,7 @@ var a, b = 2, 3;
 var num = 42;            // Number
 var isTrue = true;       // Boolean
 var text = "Hello";      // String
+var num = null           // null 
 ```
 
 ### Compound Types
@@ -114,7 +123,7 @@ var result = add(3, 4);
 
 ### Closures
 ```python
-function outerFunction() {
+func outerFunction() {
     var outerVar = "I'm from outer!";
 
     function innerFunction() {
