@@ -17,7 +17,8 @@ class Lexer:
     def tokenize(self):
         # Define language elements: keywords, operators, comparators, etc.
         keywords = ['var', 'const', 'if', 'elif', 'else', 'while', 'do', 'for', 'func', 'return', 'try', 'catch',
-                    'finally', 'throw', 'print', 'true', 'false', 'tuple', 'list', 'arr', 'ExceptionType', 'null']
+                    'finally', 'throw', 'print', 'true', 'false', 'tuple', 'list', 'arr', 'ExceptionType', 'null'
+                    'break', 'continue', 'this', 'typeof']
         operators = ['+=', '-=', '++', '--', '+', '-', '*', '/', '%', '=']
         comparators = ['==', '!=', '<=', '>=', '<', '>', '!']
         parenthesis = ['(', ')', '{', '}', '[', ']']
