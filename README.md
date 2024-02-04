@@ -112,16 +112,16 @@ if (condition) {
 
 H** has three kind of loops namely 'while', 'for' and 'do while'. 
 
-__**'while'**__ - Here loop checks the condition first, if it would pass then run the code inside the '{  //code }' brackets.
+**`while`** - Here loop checks the condition first, if it would pass then run the code inside the '{  //code }' brackets.
 again come to the top ,check the codition and so on till condition fails.
 
-__**'for'**__ - Here we have three terms in initial bracket separated by two semi colon.
+**`for`** - Here we have three terms in initial bracket separated by two semi colon.
 first term - we declare and initialise a variable(let i) 
 second term - we check the condition based on declared variable, if pass then go to loop 
 third term - after running code inside the loop, we first return to the third term and do the mentioned operation on the variable and again check the codition mentioned on the second term and do the same as before till condition satisfied of the 
 second term 
 
-__**'do while'**__ - Here we first run the code inside the 'do' loop and then check the condition inside the 'while' if passed then 
+**`do while`** - Here we first run the code inside the 'do' loop and then check the condition inside the 'while' if passed then 
 again do the same till condition fails.
 
 
@@ -143,8 +143,8 @@ do {
 
 ### Function Definition
 
-'func' takes 0 or more argument and return values based on the code written in it.
-we first write keyword 'func', then name of our function we want ot assign, arguments inside '()', and run the code inside 
+**`func`** takes 0 or more argument and return values based on the code written in it.
+we first write keyword **`func`**, then name of our function we want ot assign, arguments inside '()', and run the code inside 
 '{ }' , 
 
 ```python
@@ -205,7 +205,7 @@ print("Hello, World!");
 
 ### Unary and Binary Operators
 
-In (a = a +b) we first calculate right side of equivalent '=' and then assign the resultant value to the left side. 
+In (a = a + b) we first calculate right side of equivalent '=' and then assign the resultant value to the left side. 
 a++ is equivalent to a = a+1 , but if we pass 'a++' as an argument then a will be passed not a+1
 a+=b is equivalent to a = a+b 
 
@@ -223,7 +223,7 @@ print(a) // Outputs 12
 ### Boolean Type
 
 Boolean value is also included in var variable.
-There will be two values for boolean variable - false/0  , true/1
+There will be two values for boolean variable - **`false`**  , **`true`**
 In condition check we value is 'true' or any positive integer then condition is pass , and if it is 'false' or '0' the fails.
 
 ```python
@@ -235,7 +235,7 @@ if (!a) {
 
 ### Comparators and if-else
 
-below comparators returns boolean value. If correctly shown then return truen otherwise false.
+The comparators return a boolean value. If the relation is valid then it returns true otherwise false.
 like in (a >= c) if a is greater or equal to c then return true otherwise false.
 In (a <= c) if a is lesser or equal to c then return true otherwise false
 In (a == c)if a is equal to c then return true otherwise false
@@ -253,7 +253,7 @@ if (a >= c) {
 
 ### Strings
 
-we can declare string using var variable.
+We can declare string using var variable.
 String can be added using '+' sign. We can give the string itself or variable which contained the string for addition.
 Addition of string 'a + b' signifies that, after last character of string a we will have first character of string b and 
 total string will end on last character of string b.
