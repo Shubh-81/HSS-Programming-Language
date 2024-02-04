@@ -1,0 +1,55 @@
+// Define a function to calculate the factorial of a number
+func factorial(var n) {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+// Calculate and print the factorial of 5
+var result = factorial(5);
+print("Factorial of 5 is: " + result);
+
+// Define a list of numbers
+list numbers = [1, 2, 3, 4, 5];
+
+// Print the elements of the list using a loop
+for (var i = 0; i < numbers.length(); i++) {
+    print("Element at index " + i + ": " + numbers[i]);
+}
+
+// Concatenate two strings and print the result
+var str1 = "Hello";
+var str2 = "World";
+var greeting = str1 + " " + str2;
+print("Greeting: " + greeting);
+
+// Demonstrate exception handling
+try {
+    // Attempt to access an element outside the list bounds
+    var outOfBounds = numbers[10];
+} catch (ExceptionType e) {
+    print("Exception caught: " + e.message());
+} finally {
+    print("Finally block executed.");
+}
+
+// Increment a variable using unary and binary operators
+var counter = 0;
+counter++;
+print("Counter after increment: " + counter);
+counter += 5;
+print("Counter after addition: " + counter);
+
+// Demonstrate if-else with comparators
+var a = 10;
+var b = 20;
+
+if (a > b) {
+    print("a is greater than b");
+} elif (a == b) {
+    print("a is equal to b");
+} else {
+    print("a is less than b");
+}
