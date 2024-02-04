@@ -1,22 +1,24 @@
 # H**
 
 ## Table of Contents
-1. [Introduction](#introduction)
-2. [Getting Started](#getting-started)
+- [H\*\*](#h)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Getting Started](#getting-started)
     - [Hello, World!](#hello-world)
-3. [Basic Syntax](#basic-syntax)
+  - [Basic Syntax](#basic-syntax)
     - [Variables and Assignment](#variables-and-assignment)
     - [Basic Types](#basic-types)
     - [Compound Types](#compound-types)
     - [Conditionals](#conditionals)
     - [Loops](#loops)
-4. [Functions and Closures](#functions-and-closures)
+  - [Functions and Closures](#functions-and-closures)
     - [Function Definition](#function-definition)
     - [Function Invocation](#function-invocation)
     - [Closures](#closures)
-5. [Exception Handling](#exception-handling)
-6. [Printing](#printing)
-7. [Additional Features](#additional-features)
+  - [Exception Handling](#exception-handling)
+  - [Printing](#printing)
+  - [Additional Features](#additional-features)
     - [Unary and Binary Operators](#unary-and-binary-operators)
     - [Boolean Type](#boolean-type)
     - [Comparators and if-else](#comparators-and-if-else)
@@ -57,6 +59,7 @@ var a, b = 2, 3;
 ```
 
 ### Basic Types
+
 ```python
 var num = 42;            // Number
 var isTrue = true;       // Boolean
@@ -82,6 +85,22 @@ if (condition) {
 ```
 
 ### Loops
+
+H** has three kind of loops namely 'while', 'for' and 'do while'. 
+
+__**'while'**__ - Here loop checks the condition first, if it would pass then run the code inside the '{  //code }' brackets.
+again come to the top ,check the codition and so on till condition fails.
+
+__**'for'**__ - Here we have three terms in initial bracket separated by two semi colon.
+first term - we declare and initialise a variable(let i) 
+second term - we check the condition based on declared variable, if pass then go to loop 
+third term - after running code inside the loop, we first return to the third term and do the mentioned operation on the variable and again check the codition mentioned on the second term and do the same as before till condition satisfied of the 
+second term 
+
+__**'do while'**__ - Here we first run the code inside the 'do' loop and then check the condition inside the 'while' if passed then 
+again do the same till condition fails.
+
+
 ```python
 while (condition) {
     // code block
@@ -99,6 +118,11 @@ do {
 ## Functions and Closures
 
 ### Function Definition
+
+'func' takes 0 or more argument and return values based on the code written in it.
+we first write keyword 'func', then name of our function we want ot assign, arguments inside '()', and run the code inside 
+'{ }' , 
+
 ```python
 // Function definition
 func add(var x, var y) {
@@ -107,6 +131,9 @@ func add(var x, var y) {
 ```
 
 ### Function Invocation
+
+Below is the method to call a function. The returned value of the function can be stored as new variable. 
+if there is no return in the function then we only have to call the function (eg. bfs(ad, 4))
 ```python
 // Function call
 var result = add(3, 4);
@@ -145,6 +172,7 @@ throw ExceptionType("An error occurred");
 ```
 
 ## Printing
+To print any string we write inside double inverted comma (" ") and use keyword 'print'
 ```python
 print("Hello, World!");
 ```
@@ -152,6 +180,11 @@ print("Hello, World!");
 ## Additional Features
 
 ### Unary and Binary Operators
+
+In (a = a +b) we first calculate right side of equivalent '=' and then assign the resultant value to the left side. 
+a++ is equivalent to a = a+1 , but if we pass 'a++' as an argument then a will be passed not a+1
+a+=b is equivalent to a = a+b 
+
 ```python
 var a = 5;
 a++;
@@ -164,6 +197,11 @@ print(a) // Outputs 12
 ```
 
 ### Boolean Type
+
+Boolean value is also included in var variable.
+There will be two values for boolean variable - false/0  , true/1
+In condition check we value is 'true' or any positive integer then condition is pass , and if it is 'false' or '0' the fails.
+
 ```python
 var a = false;
 if (!a) {
@@ -172,6 +210,13 @@ if (!a) {
 ```
 
 ### Comparators and if-else
+
+below comparators returns boolean value. If correctly shown then return truen otherwise false.
+like in (a >= c) if a is greater or equal to c then return true otherwise false.
+In (a <= c) if a is lesser or equal to c then return true otherwise false
+In (a == c)if a is equal to c then return true otherwise false
+if (a != c)if a is not equal to c then return true otherwise false
+
 ```python
 if (a >= c) {
   print("Hello");
@@ -183,6 +228,15 @@ if (a >= c) {
 ```
 
 ### Strings
+
+we can declare string using var variable.
+String can be added using '+' sign. We can give the string itself or variable which contained the string for addition.
+Addition of string 'a + b' signifies that, after last character of string a we will have first character of string b and 
+total string will end on last character of string b.
+
+We use slice function if we want a substring of a string. 
+a.slice(i, l) signfies that we want a substring which start from the index i of string a and have a length of l.
+
 ```python
 // Concatenation
 var a = "Hello";
@@ -197,6 +251,7 @@ print(c); // Outputs "Hello"
 ```
 
 ### List and Arrays
+
 ```python
 list l = [2, 3, 4];
 l.append(5);
