@@ -7,6 +7,7 @@
   - [Getting Started](#getting-started)
     - [Hello, World!](#hello-world)
   - [Basic Syntax](#basic-syntax)
+    - [Keywords](#keywords)
     - [Variables and Assignment](#variables-and-assignment)
     - [Basic Types](#basic-types)
     - [Compound Types](#compound-types)
