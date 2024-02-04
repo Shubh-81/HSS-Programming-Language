@@ -1,0 +1,26 @@
+// Function to check if a number is prime
+func isPrime(var num) {
+    if (num < 2) {
+        return false;
+    }
+
+    for (var i = 2; i <= num / 2; i++) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Define a range of numbers
+var start = 10;
+var end = 30;
+
+// Find and print prime numbers in the range
+print("Prime numbers between " + start + " and " + end + ":");
+for (var i = start; i <= end; i++) {
+    if (isPrime(i)) {
+        print(i);
+    }
+}
