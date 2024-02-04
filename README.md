@@ -47,9 +47,9 @@ print("Hello, World!");
 ### Variables and Assignment
 H** has two types of variable declaration.
 
-__**var**__: Declares a variable and optionally initializes its value.
+**`var`**: Declares a variable and optionally initializes its value.
 
-__**const**__: Declares a read-only named constant.
+**`const`**: Declares a read-only named constant.
 
 H** is a case-sensitive language. A H** identifier can start with a letter(a - z, A - Z) or with a underscore (_) and following characters can also include numbers (0 - 9). 
 
