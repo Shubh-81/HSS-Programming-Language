@@ -78,10 +78,13 @@ var num = null           // null
 ### Compound Types
 
 There are three types of compound data types in H**.
-\n
+
 **`tuple`**:  An immutable collection of objects. Can contain objects belonging to different data types.
-**`list`**: A mutable collection of object of the same data type. 
+
+**`list`**: A mutable collection of object of the same data type.
+
 **`arr`**: A mutable collection of variable length (new items can be added using .append() method) containing objects of same data type.
+
 ```python
 tuple t = [1, "two", true];      // Tuple
 list l = [1, 2, 3, 4];           // List
