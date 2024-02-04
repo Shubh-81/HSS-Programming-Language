@@ -215,7 +215,7 @@ Variables declared outside of any function in H** are known as **`global`** vari
 func outerFunction() {
     var outerVar = "I'm from outer!";
 
-    function innerFunction() {
+    func innerFunction() {
         print(outerVar);
     }
 
