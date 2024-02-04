@@ -47,9 +47,9 @@ print("Hello, World!");
 ### Variables and Assignment
 H** has two types of variable declaration.
 
-**var**: Declares a variable and optionally initializes its value.
+__**var**__: Declares a variable and optionally initializes its value.
 
-**const**: Declares a read-only named constant.
+__**const**__: Declares a read-only named constant.
 
 H** is a case-sensitive language. A H** identifier can start with a letter(a - z, A - Z) or with a underscore (_) and following characters can also include numbers (0 - 9). 
 
@@ -65,6 +65,9 @@ var a, b = 2, 3;
 ```
 
 ### Basic Types
+
+H** is a **`dynamically`** typed programming language. This means that you do not need to declare the data type of a variable when you initialize it. The data type is determined automatically at runtime.
+
 ```python
 var num = 42;            // Number
 var isTrue = true;       // Boolean
@@ -73,6 +76,11 @@ var num = null           // null
 ```
 
 ### Compound Types
+
+There are three types of compound data types in H**.
+__**tuple**__:  An immutable collection of objects. Can contain objects belonging to different data types.
+__**list**__: A mutable collection of object of the same data type. 
+__**arr**__: A mutable collection of variable length (new items can be added using .append() method) containing objects of same data type.
 ```python
 tuple t = [1, "two", true];      // Tuple
 list l = [1, 2, 3, 4];           // List
@@ -80,6 +88,10 @@ arr a = [1, 2, 3, 4];            // Arr
 ```
 
 ### Conditionals
+
+The conditionals in H** include **`if`**, **`elif`** and **`else`**. 
+The H** conditionals are similar to Java conditionals.
+
 ```python
 if (condition) {
     // code block
