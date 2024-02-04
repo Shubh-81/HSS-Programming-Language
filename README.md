@@ -83,9 +83,9 @@ There are three types of compound data types in H**.
 
 **`tuple`**:  An immutable collection of objects. Can contain objects belonging to different data types.
 
-**`list`**: A mutable collection of object of the same data type.
+**`list`**: A mutable collection of variable length (new items can be added using .append() method) containing objects of same data type.
 
-**`arr`**: A mutable collection of variable length (new items can be added using .append() method) containing objects of same data type.
+**`arr`**: A mutable collection of object of the same data type.
 
 ```python
 tuple t = [1, "two", true];      // Tuple
@@ -164,6 +164,17 @@ var result = add(3, 4);
 ```
 
 ### Closures
+
+A variable may belong to one of these 3 scopes in H**.
+
+**`Global Scope`**: The default scope for all code running in script mode.
+
+**`Module Scope`**: The scope for code running in module mode.
+
+**`Function Scope`**: The scope created with a function (inside {}).
+
+Variables declared outside of any function in H** are known as **`global`** variables. They are called global because they are accessible to any other code in the same document. On the other hand, variables declared inside a function are known as **`local`** variables. Local variables are only available within the scope of that particular function. Unlike global variables, local variables cannot be accessed outside of the block they are declared in. This difference in scope access is the key distinction between global and local variables in H**.
+
 ```python
 func outerFunction() {
     var outerVar = "I'm from outer!";
@@ -183,6 +194,10 @@ closure();  // Outputs: I'm from outer!
 ```
 
 ## Exception Handling
+
+The **`try...catch`** statement in H** allows you to define a block of code to execute (the try block), and to define custom behavior in case there are exceptions while running that code (the catch block). When code within the try block throws an exception, execution is immediately shifted to the catch block, bypassing any remaining statements in the try block. 
+It is important to note that **`finally`** block will execute whether or not an exception is thrown. You may use **`finally`** to release the resources tied up to your script.
+
 ```python
 try {
     // code block
@@ -196,7 +211,7 @@ throw ExceptionType("An error occurred");
 ```
 
 ## Printing
-To print any string we write inside double inverted comma (" ") and use keyword 'print'
+To print any string we write inside double inverted comma (" ") and use keyword **`print`**.
 ```python
 print("Hello, World!");
 ```
@@ -223,8 +238,9 @@ print(a) // Outputs 12
 ### Boolean Type
 
 Boolean value is also included in var variable.
-There will be two values for boolean variable - **`false`**  , **`true`**
-In condition check we value is 'true' or any positive integer then condition is pass , and if it is 'false' or '0' the fails.
+There will be two values for boolean variable - **`true`**  and  **`false`**.
+
+In condition we'll check if the value is **`true`** or **`false`** and proceed accordingly.
 
 ```python
 var a = false;
@@ -253,7 +269,7 @@ if (a >= c) {
 
 ### Strings
 
-We can declare string using var variable.
+We can declare string using **`var`** variable.
 String can be added using '+' sign. We can give the string itself or variable which contained the string for addition.
 Addition of string 'a + b' signifies that, after last character of string a we will have first character of string b and 
 total string will end on last character of string b.
@@ -290,6 +306,9 @@ print(a[a.length() - 1]); // Prints last element, same for list
 ```
 
 ### Assignment and Let Expressions
+**`const`**: Assigns an indentifier to a constant value.
+
+**`var`**: Declares a variable and optionally initializes its value.
 ```python
 const a = 5; // Variable a cannot be changed after assignment
 var b = 5; // Variable can be changed after assignment
