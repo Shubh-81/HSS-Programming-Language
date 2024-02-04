@@ -46,6 +46,41 @@ print("Hello, World!");
 
 ## Basic Syntax
 
+### Keywords
+
+H** has a set of keywords defined that can't be used as identifiers. 
+
+| Keyword | Description |
+| --- | --- |
+| arr | mutable collection of fixed length |
+| break | terminates a loop |
+| catch | catches an exception during execution|
+| const | identifier for constant value |
+| continue | skips the iteration |
+| do | do-while loops |
+| elif | conditional statement |
+| else | conditional statement |
+| false | boolean |
+| finally | runs the code block irrespective of the exceptions |
+| for | iterate for some fixed number |
+| func | define a function |
+| if | conditional statement |
+| list | mutable collections with variable length |
+| null | denotes null value |
+| print | returns the ouput to stdout | 
+| return | returns output of a function |
+| this | scope variable| 
+| throw | throws an exception |
+| true | boolean |
+| try | error handling |
+| tuple | immutable collection of objects |
+| typeof | returns the data type |
+| var | identifier for mutable object |
+| while | iterate till a certain condition is met |
+
+
+
+
 ### Variables and Assignment
 H** has two types of variable declaration.
 
@@ -118,7 +153,7 @@ again come to the top ,check the codition and so on till condition fails.
 **`for`** - Here we have three terms in initial bracket separated by two semi colon.
 first term - we declare and initialise a variable(let i) 
 second term - we check the condition based on declared variable, if pass then go to loop 
-third term - after running code inside the loop, we first return to the third term and do the mentioned operation on the variable and again check the codition mentioned on the second term and do the same as before till condition satisfied of the 
+third term - after running code inside the loop, we first return to the third term and do the mentioned operation on the variable and again check the condition mentioned on the second term and do the same as before till condition satisfied of the 
 second term 
 
 **`do while`** - Here we first run the code inside the 'do' loop and then check the condition inside the 'while' if passed then 
@@ -144,8 +179,8 @@ do {
 ### Function Definition
 
 **`func`** takes 0 or more argument and return values based on the code written in it.
-we first write keyword **`func`**, then name of our function we want ot assign, arguments inside '()', and run the code inside 
-'{ }' , 
+we first write keyword **`func`**, then name of our function we want to assign, arguments inside '()', and run the code inside 
+'{ }'. 
 
 ```python
 // Function definition
@@ -222,7 +257,7 @@ print("Hello, World!");
 
 In (a = a + b) we first calculate right side of equivalent '=' and then assign the resultant value to the left side. 
 a++ is equivalent to a = a+1 , but if we pass 'a++' as an argument then a will be passed not a+1
-a+=b is equivalent to a = a+b 
+a+=b is equivalent to a = a+b.
 
 ```python
 var a = 5;
@@ -269,7 +304,7 @@ if (a >= c) {
 
 ### Strings
 
-We can declare string using **`var`** variable.
+We can declare string using **`var`** or **`const`** keywords.
 String can be added using '+' sign. We can give the string itself or variable which contained the string for addition.
 Addition of string 'a + b' signifies that, after last character of string a we will have first character of string b and 
 total string will end on last character of string b.
