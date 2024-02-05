@@ -205,8 +205,6 @@ A variable may belong to one of these 3 scopes in H**.
 
 **`Global Scope`**: The default scope for all code running in script mode.
 
-**`Module Scope`**: The scope for code running in module mode.
-
 **`Function Scope`**: The scope created with a function (inside {}).
 
 Variables declared outside of any function in H** are known as **`global`** variables. They are called global because they are accessible to any other code in the same document. On the other hand, variables declared inside a function are known as **`local`** variables. Local variables are only available within the scope of that particular function. Unlike global variables, local variables cannot be accessed outside of the block they are declared in. This difference in scope access is the key distinction between global and local variables in H**.
