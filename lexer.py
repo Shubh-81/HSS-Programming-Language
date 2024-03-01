@@ -19,7 +19,7 @@ class Lexer:
         keywords = ['var', 'const', 'if', 'elif', 'else', 'while', 'do', 'for', 'func', 'return', 'try', 'catch',
                     'finally', 'throw', 'print', 'true', 'false', 'tuple', 'list', 'arr', 'ExceptionType', 'null'
                     'break', 'continue', 'this', 'typeof']
-        operators = ['+=', '-=', '++', '--', '+', '-', '*', '/', '%', '=']
+        operators = ['+=', '-=', '++', '--', '+', '-', '*', '/', '%', '=', '*=', '/=', '%=', '&&', '||', '&', '|']
         comparators = ['==', '!=', '<=', '>=', '<', '>', '!']
         parenthesis = ['(', ')', '{', '}', '[', ']']
         punctuation = [',', ':', '.']
@@ -36,9 +36,9 @@ class Lexer:
         # Tokenize the source code using a regular expression to match different token types
         tokens = re.findall(
             r'"(?:\\.|[^"])*"|\b\d+\.\d+\b|\b\d+\b|\b(?:' + '|'.join(map(re.escape, keywords)) + r')\b|' +
-            continuous_operators_regex + r'|\b[a-zA-Z_]\w*\b|[^\s\w]',
+            r'\b(?:[a-zA-Z_]\w*|[0-9]+[a-zA-Z_]\w*)\b|' + continuous_operators_regex + r'|\b[a-zA-Z_]\w*\b|[^\s\w]',
             source_code)
-
+        print(tokens)
         for token in tokens:
             if re.match(r'^"[^"]*"$', token):
                 # Tokenize string literals: "example"
