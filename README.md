@@ -296,7 +296,7 @@ if (a >= c) {
   print("Hello");
 } elif (a == c) {
   print("World");
-} else (a != c) {
+} else{
   print("Worlds");
 }
 ```
