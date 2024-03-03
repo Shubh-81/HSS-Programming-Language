@@ -92,13 +92,13 @@ H** has two types of variable declaration.
 H** is a case-sensitive language. A H** identifier can start with a letter(a - z, A - Z) or with a underscore (_) and following characters can also include numbers (0 - 9). 
 
 ```python
-const x = 5;              // Constant Variable
-var y = 10;               // Non-Constant Variable
+const x = 5;              /* Constant Variable */
+var y = 10;               /* Non-Constant Variable */
 
-// Mutable variable assignment
+/* Mutable variable assignment */
 y = 15;
 
-// Multiple assignments
+/* Multiple assignments */
 var a, b = 2, 3;
 ```
 
@@ -107,10 +107,10 @@ var a, b = 2, 3;
 H** is a **`dynamically`** typed programming language. This means that you do not need to declare the data type of a variable when you initialize it. The data type is determined automatically at runtime.
 
 ```python
-var num = 42;            // Number
-var isTrue = true;       // Boolean
-var text = "Hello";      // String
-var num = null           // null 
+var num = 42;            /* Number */
+var isTrue = true;       /* Boolean */
+var text = "Hello";      /* String */
+var num = null           /* null */ 
 ```
 
 ### Compound Types
@@ -124,9 +124,9 @@ There are three types of compound data types in H**.
 **`arr`**: A mutable collection of object of the same data type.
 
 ```python
-tuple t = [1, "two", true];      // Tuple
-list l = [1, 2, 3, 4];           // List
-arr a = [1, 2, 3, 4];            // Arr
+tuple t = [1, "two", true];      /* Tuple */
+list l = [1, 2, 3, 4];           /* List */
+arr a = [1, 2, 3, 4];           /* Arr */
 ```
 
 ### Conditionals
@@ -136,11 +136,11 @@ The H** conditionals are similar to Java conditionals.
 
 ```python
 if (condition) {
-    // code block
+    /* code block */
 } elif (condition) {
-    // code block
+   /* code block */
 } else {
-    // code block
+    /* code block */
 }
 ```
 
@@ -163,15 +163,15 @@ again do the same till condition fails.
 
 ```python
 while (condition) {
-    // code block
+    /* code block */
 }
 
 for (var i = 0; i < 5; i++) {
-    // code block
+    /* code block */
 }
 
 do {
-    // code block
+    /* code block */
 } while (condition)
 ```
 
@@ -184,7 +184,7 @@ we first write keyword **`func`**, then name of our function we want to assign, 
 '{ }'. 
 
 ```python
-// Function definition
+/* Function definition */
 func add(var x, var y) {
     return x + y;
 }
@@ -195,7 +195,7 @@ func add(var x, var y) {
 Below is the method to call a function. The returned value of the function can be stored as new variable. 
 if there is no return in the function then we only have to call the function (eg. bfs(ad, 4))
 ```python
-// Function call
+/* Function call */
 var result = add(3, 4);
 ```
 
@@ -220,12 +220,12 @@ func outerFunction() {
     return innerFunction;
 }
 
-// Creating a closure
+/* Creating a closure */
 var closure = outerFunction();
 
-// Executing the closure
-closure();  // Outputs: I'm from outer!
-```
+/* Executing the closure */
+closure();  /* Outputs: I'm from outer! */
+``` 
 
 ## Exception Handling
 
@@ -234,11 +234,11 @@ It is important to note that **`finally`** block will execute whether or not an 
 
 ```python
 try {
-    // code block
+    /* code block */
 } catch (ExceptionType e) {
-    // handle exception
+    /* handle exception */
 } finally {
-    // optional: code block to execute regardless of exception
+   /* optional: code block to execute regardless of exception */
 }
 
 throw ExceptionType("An error occurred");
@@ -261,12 +261,12 @@ a+=b is equivalent to a = a+b.
 ```python
 var a = 5;
 a++;
-print(a); // Outputs 6
+print(a); /*  Outputs 6 */
 a+=1;
-print(a) // Outputs 7
+print(a) /* Outputs 7 */
 var b = 5
 a = a + b
-print(a) // Outputs 12
+print(a) /* Outputs 12 */
 ```
 
 ### Boolean Type
@@ -279,7 +279,7 @@ In condition we'll check if the value is **`true`** or **`false`** and proceed a
 ```python
 var a = false;
 if (!a) {
-  print("Hello");    // Prints Hello
+  print("Hello");    /* Prints Hello */
 }
 ```
 
@@ -312,16 +312,16 @@ We use slice function if we want a substring of a string.
 a.slice(i, l) signfies that we want a substring which start from the index i of string a and have a length of l.
 
 ```python
-// Concatenation
+/* Concatenation */
 var a = "Hello";
 var b = "World";
 var c = a + " " + b;
-print(c); // Outputs "Hello World"
+print(c); /* Outputs "Hello World" */
 
-// Slicing
+/* Slicing */
 var a = "Hello World";
 var c = a.slice(0, 5);
-print(c); // Outputs "Hello"
+print(c); /* Outputs "Hello" */
 ```
 
 ### List and Arrays
@@ -329,14 +329,14 @@ print(c); // Outputs "Hello"
 ```python
 list l = [2, 3, 4];
 l.append(5);
-print(l[3]); // Outputs 5, list is variable in size
+print(l[3]); /* Outputs 5, list is variable in size */
 
 arr a = [2, 3, 4];
-a.append(5); // Throws an error, array is fixed size
+a.append(5); /* Throws an error, array is fixed size */
 
-print(a.length()); // Outputs 3, same for list
-print(a[0]);  // Prints first element, same for list
-print(a[a.length() - 1]); // Prints last element, same for list
+print(a.length()); /* Outputs 3, same for list */
+print(a[0]);  /* Prints first element, same for list */
+print(a[a.length() - 1]); /* Prints last element, same for list */
 ```
 
 ### Assignment and Let Expressions
@@ -346,8 +346,8 @@ print(a[a.length() - 1]); // Prints last element, same for list
 ```python
 
 
-const a = 5; // Variable a cannot be changed after assignment
-var b = 5; // Variable can be changed after assignment
+const a = 5; /* Variable a cannot be changed after assignment */
+var b = 5; /* Variable can be changed after assignment */
 ```
 
 ## Lexer
