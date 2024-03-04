@@ -263,6 +263,7 @@ var a = 5;
 a++;
 print(a); /*  Outputs 6 */
 a+=1;
+
 print(a) /* Outputs 7 */
 var b = 5
 a = a + b
@@ -321,6 +322,7 @@ print(c); /* Outputs "Hello World" */
 /* Slicing */
 var a = "Hello World";
 var c = a.slice(0, 5);
+
 print(c); /* Outputs "Hello" */
 ```
 
