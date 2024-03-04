@@ -1,4 +1,4 @@
-// Function to find the maximum element in a list
+/* Function to find the maximum element in a list */
 func findMax(list a) {
     if (a.length() == 0) {
         throw ExceptionType("Empty list");
@@ -14,20 +14,20 @@ func findMax(list a) {
     return max;
 }
 
-// Example usage
+/* Example usage */
 try {
-    // Define a list of numbers
+    /* Define a list of numbers */
     list numbers = [12, 45, 23, 67, 8, 56, 34];
 
-    // Call the function to find the maximum
+    /* Call the function to find the maximum */
     var maxNumber = findMax(numbers);
 
-    // Print the result
+    /* Print the result */
     print("The maximum number in the list is: " + maxNumber);
 } catch (ExceptionType e) {
-    // Handle exception
+    /* Handle exception */
     print("Error: " + e.message());
 } finally {
-    // Optional: Code block to execute regardless of exception
+    /* Optional: Code block to execute regardless of exception */
     print("Program execution completed.");
 }

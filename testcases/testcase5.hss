@@ -1,4 +1,3 @@
-// Function to reverse a string
 func reverseString(var inputString) {
     var reversed = "";
     for (var i = inputString.length() - 1; i >= 0; i--) {
@@ -7,10 +6,8 @@ func reverseString(var inputString) {
     return reversed;
 }
 
-// Example usage
 var originalString = "Hello, World!";
 var reversedString = reverseString(originalString);
 
-// Print the original and reversed strings
 print("Original String: " + originalString);
 print("Reversed String: " + reversedString);

@@ -1,13 +1,9 @@
-// Define a list of numbers
 list numbers = [1, 2, 3, 4, 5];
 
-// Initialize a variable to store the sum
 var sum = 0;
 
-// Iterate through the list and calculate the sum
 for (var i = 0; i < numbers.length(); i++) {
     sum += numbers[i];
 }
 
-// Print the result
 print("The sum of the numbers is: " + sum);
