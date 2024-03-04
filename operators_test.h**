@@ -1,7 +1,0 @@
-var d=4;
-d++ ;       // this is verfiy uninary operators
-     d-=2;  
-
-while(d<1){
-    d--;
-}
