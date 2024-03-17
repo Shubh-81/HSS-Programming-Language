@@ -1,136 +1,132 @@
 from lark import Lark, Tree
 import sys
+from lexer import Lexer as Lexer_
+from lark.lexer import Lexer, Token
 
 grammar = """
     start: statements
 
     statements: statement+
 
-    statement: expression ";" 
-             | assignment ";" 
-             | control_flow 
-             | declaration ";" 
-             | return_statement ";" 
+    statement: print_statement END_OF_STATEMENT
+             | declaration END_OF_STATEMENT 
              | exception_handling 
-             | print_statement ";"
-             | comments 
+             | return_statement END_OF_STATEMENT
+             | control_flow 
+             | expression END_OF_STATEMENT 
+             | assignment END_OF_STATEMENT               
 
-    comments: "/*" comment_text? "*/"
-
-    comment_text: comment_char*
-
-    comment_char: /[^\\n]/ | /\\n/
+    print_statement: PRINT_KEYWORD ROUND_OPEN (expression | literal | identifier) (COMMA(expression | literal | identifier))* ROUND_CLOSE
 
     expression: expression operator operand
-              | expression operator identifier "[" (identifier | integer_constant | expression) "]"
-              | expression comparator (operand | function_call)
-              | operand operator
+              | expression operator identifier SQUARE_OPEN (identifier | integer_constant | expression) SQUARE_CLOSE
+              | expression comparator expression
+              | operand unary_operator
               | operand
               | function_call
-              | "!" BOOLEAN_VAR
-              | identifier "[" (identifier | integer_constant) "]"
-              | BOOLEAN_VAR
-              | function_call operator operand
-              | identifier "[" (identifier | integer_constant| expression)"]"
-              | identifier "[" (identifier | integer_constant| expression)"]" operand expression
+              | NOT_OPERATOR(BOOLEAN_VALUE | identifier | expression)
+              | BOOLEAN_VALUE
+              | identifier SQUARE_OPEN (identifier | integer_constant| expression)SQUARE_CLOSE
+              | ROUND_OPEN (expression) ROUND_CLOSE
 
-    assignment: "var" identifier ("," identifier)* "=" (literal | identifier | expression) ("," literal | identifier | expression)*
-              | "const" identifier ("," identifier)* "=" (literal | identifier | expression) ("," literal | identifier | expression)*
-              | identifier "[" (integer_constant | identifier) "]" "=" expression
-              | identifier ("," identifier)* "=" (literal | identifier | expression) ("," literal | identifier | expression)*
-              | identifier index "=" expression
+    assignment: identifier SQUARE_OPEN (integer_constant | identifier | expression) SQUARE_CLOSE ASSIGNMENT_OPERATOR expression
+              | identifier (COMMA identifier)* ASSIGNMENT_OPERATOR (literal | identifier | expression) (COMMA (literal | identifier | expression))*
+              | identifier index ASSIGNMENT_OPERATOR expression
+              | identifier compound_operator expression
 
-    index:     "[" (expression | integer_constant) "]" 
-              | index "[" (expression |integer_constant) "]"
+    index:     SQUARE_OPEN (expression | integer_constant) SQUARE_CLOSE 
+              | index SQUARE_OPEN (expression |integer_constant) SQUARE_CLOSE
               
-    control_flow: "func" identifier "(" parameters ")" block
-                |"if" "(" expression ")" block
-                | "elif" "(" expression ")" block
-                | "else" block
-                | "while" "(" expression ")" block
-                | "do" block "while" "(" expression ")" 
-                | "for" "(" assignment ";" expression ";" (expression | assignment) ")" block
-                | "break" ";"
-                | "continue" ";"
+    control_flow: FUNCTION_DECLARATION identifier ROUND_OPEN parameters ROUND_CLOSE block
+                | IF_ELIF ROUND_OPEN expression ROUND_CLOSE block
+                | ELSE_KEYWORD block
+                | WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE block
+                | DO_KEYWORD block WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE
+                | FOR_KEYWORD ROUND_OPEN dec_control_flow END_OF_STATEMENT expression END_OF_STATEMENT (expression | assignment) ROUND_CLOSE block
+                | BREAK_CONTINUE END_OF_STATEMENT
 
-    declaration: "tuple" identifier "=" "[" expression ("," expression)* "]"
-                | "list" identifier "=" "[" expression ("," expression)* "]"
-                | "list" identifier "=" "[" ("," | (expression))* "]"
-                | "arr" identifier "=" "[" literal ("," literal)* "]"
-                | "ExceptionType" identifier "=" identifier
-                | "null" ";"
-                | "list" identifier "=" matrix
+    dec_control_flow: VARIABLE_DECLARATION identifier ASSIGNMENT_OPERATOR (literal | identifier | expression)
+
+    declaration: TUPLE_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
+                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
+                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN (COMMA | (expression))* SQUARE_CLOSE
+                | ARR_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN literal (COMMA literal)* SQUARE_CLOSE
+                | EXCEPTION_TYPE identifier ASSIGNMENT_OPERATOR identifier
+                | NULL_KEYWORD 
+                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR matrix
+                | ARR_DECLARATION  identifier ASSIGNMENT_OPERATOR matrix
+                | VARIABLE_DECLARATION identifier (COMMA identifier)* ASSIGNMENT_OPERATOR (literal | identifier | expression) (COMMA (literal | identifier | expression))* 
     
-    matrix : "[" [items]"]"
+    matrix : SQUARE_OPEN [items]SQUARE_CLOSE
 
-    items: value ("," value)*
+    items: value (COMMA value)*
     value: matrix | literal
 
-    exception_handling: "try" block "catch" "(" "ExceptionType" identifier ")" block "finally" block
-                       | "throw" "ExceptionType" "(" comment_text ")" ";"
+    exception_handling: TRY_KEYWORD block CATCH_KEYWORD ROUND_OPEN EXCEPTION_TYPE identifier ROUND_CLOSE block FINALLY_KEYWORD block
+                       | THROW_KEYWORD EXCEPTION_TYPE ROUND_OPEN ROUND_CLOSE END_OF_STATEMENT
 
-    print_statement: "print" "(" (expression) ")"
 
-    block: "{" statements "}" | "{" "}"
+    block: CURLY_OPEN statements CURLY_CLOSE | CURLY_OPEN CURLY_CLOSE
 
-    function_call: identifier "(" arguments ")"
-    | identifier "." identifier "(" arguments ")" 
+    function_call: identifier ROUND_OPEN arguments ROUND_CLOSE
+    | identifier DOT_OPERATOR identifier ROUND_OPEN arguments ROUND_CLOSE 
 
 
     operand: identifier
            | literal
 
-    return_statement: "return" (expression)
+    return_statement: RETURN_KEYWORD (expression)
 
-    operator: "+"
-            | "-"
-            | "*"
-            | "/"
-            | "%"
-            | "+="
-            | "-="
-            | "++"
-            | "--"
-            | "&"
-            | "|"
+    operator: OPERATOR
 
-    comparator: "=="
-              | "!="
-              | "<=" 
-              | ">="
-              | "<"
-              | ">"
-              | "||"
-              | "&&"
+    compound_operator: COMPOUND_OPERATOR
 
-    identifier: /[a-zA-Z_][a-zA-Z0-9_]*/
+    unary_operator: UNARY_OPERATOR
+
+    comparator: COMPARATOR
+    
+    identifier: IDENTIFIER
+
 
     literal: integer_constant
            | decimal_constant
            | string_literal
-           | BOOLEAN_VAR
-           | "!" (BOOLEAN_VAR | identifier)
+           | BOOLEAN_VALUE
 
-    BOOLEAN_VAR: "true" | "false"
+    keywords: KEYWORD
 
-    integer_constant: /[0-9]+/
+    integer_constant: INTEGER_CONSTANT
 
-    decimal_constant: /[0-9]+ '.' [0-9]+/
+    decimal_constant: DECIMAL_CONSTANT
 
-    string_literal: /"[^"]*"/
+    string_literal: STRING_LITERAL
 
-    arguments: ("," | expression)*
+    arguments: (COMMA | expression)*
 
-    parameters: parameter ("," parameter)*
-                | ("," expression)*
+    parameters: parameter (COMMA parameter)*
+                | (COMMA expression)*
 
-    parameter: "var" identifier | "const" identifier
-
+    parameter: VARIABLE_DECLARATION identifier
+    %declare STRING_LITERAL BOOLEAN_VALUE COMMA FUNCTION_DECLARATION BREAK_CONTINUE IF_ELIF ELSE_KEYWORD WHILE_KEYWORD DO_KEYWORD FOR_KEYWORD PRINT_KEYWORD RETURN_KEYWORD VARIABLE_DECLARATION LIST_DECLARATION ARR_DECLARATION TUPLE_DECLARATION EXCEPTION_TYPE NULL_KEYWORD TRY_KEYWORD CATCH_KEYWORD FINALLY_KEYWORD THROW_KEYWORD KEYWORD NOT_OPERATOR ASSIGNMENT_OPERATOR OPERATOR COMPOUND_OPERATOR UNARY_OPERATOR COMPARATOR DOT_OPERATOR PUNCTUATION END_OF_STATEMENT ROUND_OPEN ROUND_CLOSE CURLY_OPEN CURLY_CLOSE SQUARE_OPEN SQUARE_CLOSE DECIMAL_CONSTANT INTEGER_CONSTANT IDENTIFIER QUOTATION ERROR
     %import common.WS
     %ignore WS
 """
 
-parser = Lark(grammar, start='start')
+
+class MyLexer(Lexer):
+    def __init__(self, lexer_conf):
+        pass
+
+    def lex(self, data):
+        lexer = Lexer_(source_code=data)
+        lexer.tokenize()
+        tokens = lexer.get_tokens()
+        for type, value in tokens:
+            yield Token(type, value)
+
+
+parser = Lark(grammar, start='start', lexer=MyLexer)
+
 
 input_string = """
 
