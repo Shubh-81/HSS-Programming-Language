@@ -264,10 +264,10 @@ a++;
 print(a); /*  Outputs 6 */
 a+=1;
 
-print(a) /* Outputs 7 */
-var b = 5
-a = a + b
-print(a) /* Outputs 12 */
+print(a);/* Outputs 7 */
+var b = 5;
+a = a + b;
+print(a); /* Outputs 12 */
 ```
 
 ### Boolean Type
