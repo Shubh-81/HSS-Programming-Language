@@ -127,17 +127,6 @@ class MyLexer(Lexer):
 
 parser = Lark(grammar, start='start', lexer=MyLexer)
 
-
-input_string = """
-
- 
-list a =[[1,2,3],[2,3,4],[2,3,4]];
-list a=[[[[[]]]]];
-a[1][2][3]=11;
-
- 
-"""
-
 def visualize_tree(tree, depth=0):
     if isinstance(tree, Tree):
         print("  " * depth + "+-" + str(tree.data))
