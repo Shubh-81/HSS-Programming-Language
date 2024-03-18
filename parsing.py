@@ -9,73 +9,72 @@ grammar = """
     statements: statement+
 
     statement: print_statement END_OF_STATEMENT
-             | declaration END_OF_STATEMENT 
-             | exception_handling 
+             | declaration END_OF_STATEMENT
+             | exception_handling
              | return_statement END_OF_STATEMENT
-             | control_flow 
-             | expression END_OF_STATEMENT 
-             | assignment END_OF_STATEMENT               
+             | control_flow
+             | expression_statement
 
-    print_statement: PRINT_KEYWORD ROUND_OPEN (expression | literal | identifier) (COMMA(expression | literal | identifier))* ROUND_CLOSE
+    print_statement: PRINT_KEYWORD ROUND_OPEN print_args ROUND_CLOSE
 
-    expression: expression operator operand
-              | expression operator identifier SQUARE_OPEN (identifier | integer_constant | expression) SQUARE_CLOSE
-              | expression comparator expression
-              | operand unary_operator
-              | operand
+    print_args: (expression) (COMMA print_args)?
+
+    expression_statement: expression END_OF_STATEMENT
+                        | assignment END_OF_STATEMENT
+
+    expression: expression (operator|comparator) expression
+              | unary_expression
+              | identifier
               | function_call
-              | NOT_OPERATOR(BOOLEAN_VALUE | identifier | expression)
-              | BOOLEAN_VALUE
-              | identifier SQUARE_OPEN (identifier | integer_constant| expression)SQUARE_CLOSE
-              | ROUND_OPEN (expression) ROUND_CLOSE
+              | identifier index
+              | ROUND_OPEN expression ROUND_CLOSE
+              | literal
+              | identifier COMPOUND_OPERATOR expression
+              | identifier DOT_OPERATOR identifier expression
 
-    assignment: identifier SQUARE_OPEN (integer_constant | identifier | expression) SQUARE_CLOSE ASSIGNMENT_OPERATOR expression
-              | identifier (COMMA identifier)* ASSIGNMENT_OPERATOR (literal | identifier | expression) (COMMA (literal | identifier | expression))*
-              | identifier index ASSIGNMENT_OPERATOR expression
-              | identifier compound_operator expression
+    unary_expression: unary_operator identifier | identifier unary_operator
+                    | NOT_OPERATOR (identifier | ROUND_OPEN expression ROUND_CLOSE)
 
-    index:     SQUARE_OPEN (expression | integer_constant) SQUARE_CLOSE 
-              | index SQUARE_OPEN (expression |integer_constant) SQUARE_CLOSE
-              
+    assignment: identifier ASSIGNMENT_OPERATOR expression
+              | identifier ASSIGNMENT_OPERATOR assignment_list
+
+    assignment_list: (literal|identifier) COMMA (literal|identifier) (COMMA (literal|identifier))*
+
+    index: (index?) SQUARE_OPEN expression SQUARE_CLOSE
+
     control_flow: FUNCTION_DECLARATION identifier ROUND_OPEN parameters ROUND_CLOSE block
-                | IF_ELIF ROUND_OPEN expression ROUND_CLOSE block
-                | ELSE_KEYWORD block
+                | IF_ELIF ROUND_OPEN expression ROUND_CLOSE block (ELSE_KEYWORD block)?
                 | WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE block
                 | DO_KEYWORD block WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE
                 | FOR_KEYWORD ROUND_OPEN dec_control_flow END_OF_STATEMENT expression END_OF_STATEMENT (expression | assignment) ROUND_CLOSE block
                 | BREAK_CONTINUE END_OF_STATEMENT
 
-    dec_control_flow: VARIABLE_DECLARATION identifier ASSIGNMENT_OPERATOR (literal | identifier | expression)
+    dec_control_flow: VARIABLE_DECLARATION identifier ASSIGNMENT_OPERATOR expression
 
     declaration: TUPLE_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
-                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
-                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN (COMMA | (expression))* SQUARE_CLOSE
+                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR list_content
                 | ARR_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN literal (COMMA literal)* SQUARE_CLOSE
                 | EXCEPTION_TYPE identifier ASSIGNMENT_OPERATOR identifier
-                | NULL_KEYWORD 
                 | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR matrix
-                | ARR_DECLARATION  identifier ASSIGNMENT_OPERATOR matrix
-                | VARIABLE_DECLARATION identifier (COMMA identifier)* ASSIGNMENT_OPERATOR (literal | identifier | expression) (COMMA (literal | identifier | expression))* 
-    
-    matrix : SQUARE_OPEN [items]SQUARE_CLOSE
+                | ARR_DECLARATION identifier ASSIGNMENT_OPERATOR matrix
+                | VARIABLE_DECLARATION identifier (COMMA identifier)* ASSIGNMENT_OPERATOR expression (COMMA (expression))*
 
-    items: value (COMMA value)*
-    value: matrix | literal
+    list_content: SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
+                | SQUARE_OPEN SQUARE_CLOSE
+
+    matrix: SQUARE_OPEN items SQUARE_CLOSE
+
+    items: matrix (COMMA matrix)*
 
     exception_handling: TRY_KEYWORD block CATCH_KEYWORD ROUND_OPEN EXCEPTION_TYPE identifier ROUND_CLOSE block FINALLY_KEYWORD block
-                       | THROW_KEYWORD EXCEPTION_TYPE ROUND_OPEN ROUND_CLOSE END_OF_STATEMENT
-
+                      | THROW_KEYWORD EXCEPTION_TYPE ROUND_OPEN print_args ROUND_CLOSE END_OF_STATEMENT
 
     block: CURLY_OPEN statements CURLY_CLOSE | CURLY_OPEN CURLY_CLOSE
 
     function_call: identifier ROUND_OPEN arguments ROUND_CLOSE
-    | identifier DOT_OPERATOR identifier ROUND_OPEN arguments ROUND_CLOSE 
+                 | identifier DOT_OPERATOR identifier ROUND_OPEN arguments ROUND_CLOSE
 
-
-    operand: identifier
-           | literal
-
-    return_statement: RETURN_KEYWORD (expression)
+    return_statement: RETURN_KEYWORD expression?
 
     operator: OPERATOR
 
@@ -84,14 +83,14 @@ grammar = """
     unary_operator: UNARY_OPERATOR
 
     comparator: COMPARATOR
-    
-    identifier: IDENTIFIER
 
+    identifier: IDENTIFIER
 
     literal: integer_constant
            | decimal_constant
            | string_literal
-           | BOOLEAN_VALUE
+           | BOOLEAN_VALUE 
+           | NULL_KEYWORD
 
     keywords: KEYWORD
 
@@ -104,14 +103,13 @@ grammar = """
     arguments: (COMMA | expression)*
 
     parameters: parameter (COMMA parameter)*
-                | (COMMA expression)*
+              | (COMMA expression)*
 
-    parameter: VARIABLE_DECLARATION identifier
+    parameter: (VARIABLE_DECLARATION | LIST_DECLARATION | ARR_DECLARATION | TUPLE_DECLARATION) identifier
     %declare STRING_LITERAL BOOLEAN_VALUE COMMA FUNCTION_DECLARATION BREAK_CONTINUE IF_ELIF ELSE_KEYWORD WHILE_KEYWORD DO_KEYWORD FOR_KEYWORD PRINT_KEYWORD RETURN_KEYWORD VARIABLE_DECLARATION LIST_DECLARATION ARR_DECLARATION TUPLE_DECLARATION EXCEPTION_TYPE NULL_KEYWORD TRY_KEYWORD CATCH_KEYWORD FINALLY_KEYWORD THROW_KEYWORD KEYWORD NOT_OPERATOR ASSIGNMENT_OPERATOR OPERATOR COMPOUND_OPERATOR UNARY_OPERATOR COMPARATOR DOT_OPERATOR PUNCTUATION END_OF_STATEMENT ROUND_OPEN ROUND_CLOSE CURLY_OPEN CURLY_CLOSE SQUARE_OPEN SQUARE_CLOSE DECIMAL_CONSTANT INTEGER_CONSTANT IDENTIFIER QUOTATION ERROR
     %import common.WS
     %ignore WS
 """
-
 
 class MyLexer(Lexer):
     def __init__(self, lexer_conf):
@@ -138,13 +136,6 @@ def visualize_tree(tree, depth=0):
             visualize_tree(tree.children[-1], depth + 1)
     else:
         print("  " * depth + "+-" + str(tree))
-
-try:
-    tree = parser.parse(input_string)
-    visualize_tree(tree)
-    print("Parsing successful.")
-except Exception as e:
-    print("Parsing failed:", e)
 
 
 if __name__ == "__main__":
