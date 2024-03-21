@@ -110,7 +110,7 @@ H** is a **`dynamically`** typed programming language. This means that you do no
 var num = 42;            /* Number */
 var isTrue = true;       /* Boolean */
 var text = "Hello";      /* String */
-var num = null           /* null */ 
+var num = null;           /* null */ 
 ```
 
 ### Compound Types
