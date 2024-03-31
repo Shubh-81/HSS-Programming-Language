@@ -4,111 +4,81 @@ from lexer import Lexer as Lexer_
 from lark.lexer import Lexer, Token
 
 grammar = """
-    start: statements
+?start: statements
 
-    statements: statement+
+statements: statement+
+statement: print | declare | exception_handling | return_statement | control | expression_statement
 
-    statement: print_statement END_OF_STATEMENT
-             | declaration END_OF_STATEMENT
-             | exception_handling
-             | return_statement END_OF_STATEMENT
-             | control_flow
-             | expression_statement
+print: PRINT_KEYWORD ROUND_OPEN print_args ROUND_CLOSE END_OF_STATEMENT
+print_args: expression (COMMA expression)* | 
 
-    print_statement: PRINT_KEYWORD ROUND_OPEN print_args ROUND_CLOSE
+expression_statement: expression END_OF_STATEMENT 
+                    | assignment END_OF_STATEMENT
 
-    print_args: (expression) (COMMA print_args)?
+expression: expression OPERATOR expression -> binary_op 
+ | expression COMPARATOR expression -> binary_comp
+ | unary_expression 
+ | function_call 
+ | IDENTIFIER 
+ | IDENTIFIER index
+ | ROUND_OPEN expression ROUND_CLOSE 
+ | literal 
+ | IDENTIFIER COMPOUND_OPERATOR expression  -> binary_compound_op
+ | IDENTIFIER DOT_OPERATOR IDENTIFIER expression -> binary_dot_op
 
-    expression_statement: expression END_OF_STATEMENT
-                        | assignment END_OF_STATEMENT
+unary_expression: UNARY_OPERATOR IDENTIFIER 
+| IDENTIFIER UNARY_OPERATOR 
+| NOT_OPERATOR IDENTIFIER 
+| NOT_OPERATOR ROUND_OPEN expression ROUND_CLOSE
 
-    expression: expression (operator|comparator) expression
-              | unary_expression
-              | identifier
-              | function_call
-              | identifier index
-              | ROUND_OPEN expression ROUND_CLOSE
-              | literal
-              | identifier COMPOUND_OPERATOR expression
-              | identifier DOT_OPERATOR identifier expression
+assignment: IDENTIFIER ASSIGNMENT_OPERATOR expression 
 
-    unary_expression: unary_operator identifier | identifier unary_operator
-                    | NOT_OPERATOR (identifier | ROUND_OPEN expression ROUND_CLOSE)
+index: (SQUARE_OPEN expression SQUARE_CLOSE)+ 
 
-    assignment: identifier ASSIGNMENT_OPERATOR expression
-              | identifier ASSIGNMENT_OPERATOR assignment_list
+control: function | if_else | while_ | do_while | for_loop | break_continue
+function: FUNCTION_DECLARATION IDENTIFIER ROUND_OPEN parameters ROUND_CLOSE block
+if_else: IF_ELIF ROUND_OPEN expression ROUND_CLOSE block else_temp 
+else_temp: ELSE_KEYWORD block | 
+while_: WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE block
+do_while: DO_KEYWORD block WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE
+for_loop: FOR_KEYWORD ROUND_OPEN dec_control_flow END_OF_STATEMENT expression END_OF_STATEMENT for_update ROUND_CLOSE block
+for_update: expression | assignment
+break_continue: BREAK_CONTINUE END_OF_STATEMENT
 
-    assignment_list: (literal|identifier) COMMA (literal|identifier) (COMMA (literal|identifier))*
+dec_control_flow: VARIABLE_DECLARATION IDENTIFIER ASSIGNMENT_OPERATOR expression
 
-    index: (index?) SQUARE_OPEN expression SQUARE_CLOSE
+declare: tuple_declaration | list_declaration | arr_declaration | exception_declaration | variable_declaration 
+tuple_declaration: TUPLE_DECLARATION IDENTIFIER ASSIGNMENT_OPERATOR matrix END_OF_STATEMENT
+list_declaration: LIST_DECLARATION IDENTIFIER ASSIGNMENT_OPERATOR matrix END_OF_STATEMENT
+arr_declaration: ARR_DECLARATION IDENTIFIER ASSIGNMENT_OPERATOR matrix END_OF_STATEMENT
+exception_declaration: EXCEPTION_TYPE IDENTIFIER ASSIGNMENT_OPERATOR IDENTIFIER END_OF_STATEMENT
+variable_declaration: VARIABLE_DECLARATION IDENTIFIER (COMMA IDENTIFIER)* ASSIGNMENT_OPERATOR expression (COMMA expression)* END_OF_STATEMENT
 
-    control_flow: FUNCTION_DECLARATION identifier ROUND_OPEN parameters ROUND_CLOSE block
-                | IF_ELIF ROUND_OPEN expression ROUND_CLOSE block (ELSE_KEYWORD block)?
-                | WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE block
-                | DO_KEYWORD block WHILE_KEYWORD ROUND_OPEN expression ROUND_CLOSE
-                | FOR_KEYWORD ROUND_OPEN dec_control_flow END_OF_STATEMENT expression END_OF_STATEMENT (expression | assignment) ROUND_CLOSE block
-                | BREAK_CONTINUE END_OF_STATEMENT
+matrix: matrix_temp | list_content
+matrix_temp: SQUARE_OPEN matrix (COMMA matrix)* SQUARE_CLOSE | 
+list_content: SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE | SQUARE_OPEN SQUARE_CLOSE
 
-    dec_control_flow: VARIABLE_DECLARATION identifier ASSIGNMENT_OPERATOR expression
+exception_handling: try_catch_finally | throw
+try_catch_finally: TRY_KEYWORD block CATCH_KEYWORD ROUND_OPEN EXCEPTION_TYPE IDENTIFIER ROUND_CLOSE block FINALLY_KEYWORD block
+throw: THROW_KEYWORD EXCEPTION_TYPE ROUND_OPEN print_args ROUND_CLOSE END_OF_STATEMENT
 
-    declaration: TUPLE_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
-                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR list_content
-                | ARR_DECLARATION identifier ASSIGNMENT_OPERATOR SQUARE_OPEN literal (COMMA literal)* SQUARE_CLOSE
-                | EXCEPTION_TYPE identifier ASSIGNMENT_OPERATOR identifier
-                | LIST_DECLARATION identifier ASSIGNMENT_OPERATOR matrix
-                | ARR_DECLARATION identifier ASSIGNMENT_OPERATOR matrix
-                | VARIABLE_DECLARATION identifier (COMMA identifier)* ASSIGNMENT_OPERATOR expression (COMMA (expression))*
+block: CURLY_OPEN statements CURLY_CLOSE | CURLY_OPEN CURLY_CLOSE
 
-    list_content: SQUARE_OPEN expression (COMMA expression)* SQUARE_CLOSE
-                | SQUARE_OPEN SQUARE_CLOSE
+function_call: IDENTIFIER ROUND_OPEN argument_temp ROUND_CLOSE -> function_call 
+| IDENTIFIER DOT_OPERATOR IDENTIFIER ROUND_OPEN argument_temp ROUND_CLOSE -> inbuilt_function_call
 
-    matrix: SQUARE_OPEN items SQUARE_CLOSE
+return_statement: RETURN_KEYWORD expression? END_OF_STATEMENT
 
-    items: matrix (COMMA matrix)*
+literal: INTEGER_CONSTANT | DECIMAL_CONSTANT | STRING_LITERAL | BOOLEAN_VALUE | NULL_KEYWORD
 
-    exception_handling: TRY_KEYWORD block CATCH_KEYWORD ROUND_OPEN EXCEPTION_TYPE identifier ROUND_CLOSE block FINALLY_KEYWORD block
-                      | THROW_KEYWORD EXCEPTION_TYPE ROUND_OPEN print_args ROUND_CLOSE END_OF_STATEMENT
+argument_temp: expression (COMMA expression)* |
 
-    block: CURLY_OPEN statements CURLY_CLOSE | CURLY_OPEN CURLY_CLOSE
+parameters: parameter (COMMA parameter)* |
+parameter: VARIABLE_DECLARATION IDENTIFIER | LIST_DECLARATION IDENTIFIER | ARR_DECLARATION IDENTIFIER | TUPLE_DECLARATION IDENTIFIER
 
-    function_call: identifier ROUND_OPEN arguments ROUND_CLOSE
-                 | identifier DOT_OPERATOR identifier ROUND_OPEN arguments ROUND_CLOSE
-
-    return_statement: RETURN_KEYWORD expression?
-
-    operator: OPERATOR
-
-    compound_operator: COMPOUND_OPERATOR
-
-    unary_operator: UNARY_OPERATOR
-
-    comparator: COMPARATOR
-
-    identifier: IDENTIFIER
-
-    literal: integer_constant
-           | decimal_constant
-           | string_literal
-           | BOOLEAN_VALUE 
-           | NULL_KEYWORD
-
-    keywords: KEYWORD
-
-    integer_constant: INTEGER_CONSTANT
-
-    decimal_constant: DECIMAL_CONSTANT
-
-    string_literal: STRING_LITERAL
-
-    arguments: (COMMA | expression)*
-
-    parameters: parameter (COMMA parameter)*
-              | (COMMA expression)*
-
-    parameter: (VARIABLE_DECLARATION | LIST_DECLARATION | ARR_DECLARATION | TUPLE_DECLARATION) identifier
-    %declare STRING_LITERAL BOOLEAN_VALUE COMMA FUNCTION_DECLARATION BREAK_CONTINUE IF_ELIF ELSE_KEYWORD WHILE_KEYWORD DO_KEYWORD FOR_KEYWORD PRINT_KEYWORD RETURN_KEYWORD VARIABLE_DECLARATION LIST_DECLARATION ARR_DECLARATION TUPLE_DECLARATION EXCEPTION_TYPE NULL_KEYWORD TRY_KEYWORD CATCH_KEYWORD FINALLY_KEYWORD THROW_KEYWORD KEYWORD NOT_OPERATOR ASSIGNMENT_OPERATOR OPERATOR COMPOUND_OPERATOR UNARY_OPERATOR COMPARATOR DOT_OPERATOR PUNCTUATION END_OF_STATEMENT ROUND_OPEN ROUND_CLOSE CURLY_OPEN CURLY_CLOSE SQUARE_OPEN SQUARE_CLOSE DECIMAL_CONSTANT INTEGER_CONSTANT IDENTIFIER QUOTATION ERROR
-    %import common.WS
-    %ignore WS
+%declare STRING_LITERAL BOOLEAN_VALUE COMMA FUNCTION_DECLARATION BREAK_CONTINUE IF_ELIF ELSE_KEYWORD WHILE_KEYWORD DO_KEYWORD FOR_KEYWORD PRINT_KEYWORD RETURN_KEYWORD VARIABLE_DECLARATION LIST_DECLARATION ARR_DECLARATION TUPLE_DECLARATION EXCEPTION_TYPE NULL_KEYWORD TRY_KEYWORD CATCH_KEYWORD FINALLY_KEYWORD THROW_KEYWORD KEYWORD NOT_OPERATOR ASSIGNMENT_OPERATOR OPERATOR COMPOUND_OPERATOR UNARY_OPERATOR COMPARATOR DOT_OPERATOR PUNCTUATION END_OF_STATEMENT ROUND_OPEN ROUND_CLOSE CURLY_OPEN CURLY_CLOSE SQUARE_OPEN SQUARE_CLOSE DECIMAL_CONSTANT INTEGER_CONSTANT IDENTIFIER QUOTATION ERROR
+%import common.WS
+%ignore WS
 """
 
 class MyLexer(Lexer):
