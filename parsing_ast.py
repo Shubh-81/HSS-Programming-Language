@@ -403,6 +403,7 @@ class Literal(Expression):
     def __init__(self, value):
         super().__init__()
         self.value = value.value
+        self.type = value.type
 
     def __str__(self) -> str:
         return f"{self.value}"
