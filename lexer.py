@@ -1,7 +1,5 @@
 import re
 import sys
-
-
 class Lexer:
     def __init__(self, source_code=None, file_path=None):
         if source_code is not None:

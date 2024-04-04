@@ -25,16 +25,6 @@ var str2 = "World";
 var greeting = str1 + " " + str2;
 print("Greeting: " + greeting);
 
-/* Demonstrate exception handling */
-try {
-    /* Attempt to access an element outside the list bounds */
-    var outOfBounds = numbers[10];
-} catch (ExceptionType e) {
-    print("Exception caught: " + e.message());
-} finally {
-    print("Finally block executed.");
-}
-
 /* Increment a variable using unary and binary operators */
 var counter = 0;
 counter++;

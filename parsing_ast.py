@@ -422,6 +422,17 @@ class Operator(Expression):
     def __repr__(self):
         return f"operator({repr(self.operator)})"
     
+class CompoundOperator(Expression):
+    def __init__(self, operator):
+        super().__init__()
+        self.operator = operator
+
+    def __str__(self) -> str:
+        return self.operator
+    
+    def __repr__(self):
+        return f"compound_operator({repr(self.operator)})"
+    
 class UnaryOperator(Expression):
     def __init__(self, operator):
         super().__init__()
@@ -747,7 +758,7 @@ class Transformer(lark.Transformer):
         return UnaryOperator(token.value)
     
     def COMPOUND_OPERATOR(self, token):
-        return Operator(token.value)
+        return CompoundOperator(token.value)
     
     def BREAK_CONTINUE(self, token):
         return BreakContinue(token.value)
