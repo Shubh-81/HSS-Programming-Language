@@ -1,0 +1,11 @@
+func sort(list a, var l) {
+    for (var i = 1; i < l; i++) {
+        for (var j = 1; j < l; j++) {
+            if (a[j-1] > a[j]) {
+                var t = a[j];
+                a[j] = a[j - 1];
+                a[j - 1] = t;
+            }
+        }
+    }
+}

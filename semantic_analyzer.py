@@ -43,8 +43,9 @@ class VarSymbol(Symbol):
     __repr__ = __str__
 
 class ListSymbol(Symbol):
-    def __init__(self, name, type=None, category=None) -> None:
+    def __init__(self, name, length=0, type=None, category=None) -> None:
         super().__init__(name, type, category)
+        self.length = length
     
     def __str__(self) -> str:
         return "<{class_name}(name='{name}', type='{type}', category='{category}')>".format(
@@ -95,7 +96,7 @@ class SymbolTable(object):
 symbol_table = SymbolTable()
 symbol_stack = [symbol_table]
 
-def traverse_ast(node, symbol_table, last=True):
+def traverse_ast(node, symbol_table = SymbolTable(), last=True):
     node_type = type(node) 
     print(node_type)
     if isinstance(node, list):

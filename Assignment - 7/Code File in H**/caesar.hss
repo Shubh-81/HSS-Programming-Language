@@ -1,0 +1,10 @@
+func caesarEncrypt(list a, var l, var k) {
+    for (var i = 0; i < l; i++) {
+        a[i] = (a[i] + k) % 26;
+    }
+}
+func caesarDecrypt(list a, var l, var k) {
+    for (var i = 0; i < l; i++) {
+        a[i] = (a[i] - k + 26) % 26;
+    }
+}

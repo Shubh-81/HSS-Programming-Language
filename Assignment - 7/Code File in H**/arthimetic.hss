@@ -1,0 +1,15 @@
+func add(var a, var b) {
+    return a + b;
+}
+func sub(var a, var b) {
+    return a - b;
+}
+func mul(var a, var b) {
+    return a * b;
+}
+func div(var a, var b) {
+    return a / b;
+}
+func mod(var a, var b) {
+    return a % b;
+}

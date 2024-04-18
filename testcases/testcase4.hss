@@ -15,7 +15,6 @@ func isPrime(var num) {
 var start = 10;
 var end = 30;
 
-print("Prime numbers between " + start + " and " + end + ":");
 for (var i = start; i <= end; i++) {
     if (isPrime(i)) {
         print(i);

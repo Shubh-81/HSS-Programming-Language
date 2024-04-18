@@ -289,6 +289,18 @@ class Assignment(ASTNode):
     
     def __repr__(self):
         return f"assignment({repr(self.identifier)}, {repr(self.expression)})"
+    
+class IndexAssignment(ASTNode):
+    def __init__(self, identifier, index, expression):
+        self.identifier = identifier
+        self.index = index
+        self.expression = expression
+    
+    def __str__(self) -> str:
+        return f"{self.identifier}[{self.index}] = {self.expression}"
+    
+    def __repr__(self):
+        return f"index_assignment({repr(self.identifier)}, {repr(self.index)}, {repr(self.expression)})"
 
 class BinaryOp(Expression):
     def __init__(self, operator, left: Expression, right: Expression):
@@ -706,7 +718,10 @@ class Transformer(lark.Transformer):
         return Index(expressions)
     
     def assignment(self, children):
-        return Assignment(children[0], children[2])
+        print(f'assignment - {children}')
+        if len(children) == 3:
+            return Assignment(children[0], children[2])
+        return IndexAssignment(children[0], children[1], children[3])
     
     def binary_op(self, children):
         log.debug(f'binary_op - {children}')

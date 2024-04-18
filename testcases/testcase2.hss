@@ -1,9 +1,9 @@
 list numbers = [1, 2, 3, 4, 5];
 
-var sum = 0;
+var sum = 2.0;
 
 for (var i = 0; i < numbers.length(); i++) {
     sum += numbers[i];
 }
 
-print("The sum of the numbers is: " + sum);
+

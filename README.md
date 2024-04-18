@@ -361,3 +361,14 @@ To run the lexer, use the following command:
 ```bash
 python lexer.py <path_to_testcase.hss>
 ```
+
+## Code Generation
+
+All required files for `Assignment 7` are present in `Assignment - 7` folder.
+To run `code_generation.py` use the following command:
+
+```bash
+python code_generation.py <path_to_file.hss>
+```
+
+This will generate a `wat` file saved as `out.wat`
