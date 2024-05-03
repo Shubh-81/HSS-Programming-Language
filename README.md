@@ -30,14 +30,6 @@
 ## Introduction
 H** is a minimalistic imperative programming language designed for simplicity and ease of use. It incorporates basic types, compound types, conditionals, loops, functions, closures, mutable variables, exceptions, and more.
 
-**Group Name:** Dominance
-
-**Members:**
-- Shubh Agarwal
-- Pulkit Gautam
-- Manav Parmar
-- Aman Singh
-
 ## Getting Started
 
 ### Hello, World!
@@ -352,23 +344,12 @@ const a = 5; /* Variable a cannot be changed after assignment */
 var b = 5; /* Variable can be changed after assignment */
 ```
 
-## Lexer
+## Running Your Own Code
 
-Test cases are present in the `testcases` folder with the extension `.hss`.
+To run your own code written in H**, follow these steps:
+- Write your program in a `.hss` file.
+- Run the `code_generation.py` script with your `.hss` file as an argument. This will generate a `.wat` file.
+```shell
 
-To run the lexer, use the following command:
-
-```bash
-python lexer.py <path_to_testcase.hss>
+python code_generation.py path/to/your/file.hss
 ```
-
-## Code Generation
-
-All required files for `Assignment 7` are present in `Assignment - 7` folder.
-To run `code_generation.py` use the following command:
-
-```bash
-python code_generation.py <path_to_file.hss>
-```
-
-This will generate a `wat` file saved as `out.wat`
