@@ -353,3 +353,7 @@ To run your own code written in H**, follow these steps:
 
 python code_generation.py path/to/your/file.hss
 ```
+
+## Collaboration and License
+
+We welcome collaboration and contributions from the community to enhance our project. Feel free to fork and submit pull requests to improve the codebase or suggest new features. This project is licensed under the terms of the [MIT License](LICENSE), ensuring openness and accessibility to all.
